@@ -1,0 +1,31 @@
+body {
+    background-color: #f4f4f4;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* encabezado de cada seccion */
+.seccion-titulo {
+    border-bottom: 2px solid #343a40;
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+}
+
+/* cabecera de tablas */
+table thead th {
+    background-color: #343a40;
+    color: white;
+}
+
+/* resaltar filas con prestamos vencidos */
+.fila-vencida {
+    background-color: #f8d7da !important;
+    color: #842029;
+}
+
+/* formularios centrados con un poco de sombra */
+.card-formulario {
+    background-color: white;
+    border-radius: 6px;
+    padding: 25px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
