@@ -1,4 +1,4 @@
-GRUPO-5-Lab5-6
+GRUPO-4-Lab5-6
 --------------------
 Universitario (a):
 
