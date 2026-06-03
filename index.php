@@ -11,7 +11,7 @@
 
     <nav class="navbar navbar-expand-lg navB shadow-sm py-3">
         <div class="container">
-            <h3 class="Logo">Biblioteca USFX</h3>
+            <h3 class="Logo" onclick="volverInicio()" style="cursor: pointer;">Biblioteca USFX</h3>
             <div class="d-flex gap-2">
                 <button class="btn btn-outline-light btn-sm px-3 fw-semibold" onclick="cargarContenido('libros/lista.php')">Libros</button>
                 <button class="btn btn-outline-light btn-sm px-3 fw-semibold" onclick="cargarContenido('usuarios/lista.php')">Usuarios</button>

@@ -538,3 +538,42 @@ function filtrarPrestamos() {
 
     cargarContenido(url);
 }
+
+
+
+
+
+
+function volverInicio() {
+    var contenedor = document.getElementById('contenido');
+    contenedor.innerHTML = ' \
+        <div class="row g-4 justify-content-center"> \
+            <div class="col-md-4"> \
+                <div class="card h-100 border-0 shadow-sm text-center"> \
+                    <div class="card-body p-4"> \
+                        <h4 class="fw-bold text-usfx-blue">Catálogo de Libros</h4> \
+                        <p class="text-muted small">Administración del inventario, registro de nuevos títulos, autores y volúmenes.</p> \
+                        <button class="btn btn-usfx-red btn-sm px-4 mt-2" onclick="cargarContenido(\'libros/lista.php\')">Ingresar</button> \
+                    </div> \
+                </div> \
+            </div> \
+            <div class="col-md-4"> \
+                <div class="card h-100 border-0 shadow-sm text-center"> \
+                    <div class="card-body p-4"> \
+                        <h4 class="fw-bold text-usfx-blue">Registro de Usuarios</h4> \
+                        <p class="text-muted small">Control y seguimiento de estudiantes inscritos, edición de datos y carnets.</p> \
+                        <button class="btn btn-usfx-red btn-sm px-4 mt-2" onclick="cargarContenido(\'usuarios/lista.php\')">Ingresar</button> \
+                    </div> \
+                </div> \
+            </div> \
+            <div class="col-md-4"> \
+                <div class="card h-100 border-0 shadow-sm text-center"> \
+                    <div class="card-body p-4"> \
+                        <h4 class="fw-bold text-usfx-blue">Préstamos y Control</h4> \
+                        <p class="text-muted small">Gestión de salida de libros, devoluciones y alertas de préstamos vencidos.</p> \
+                        <button class="btn btn-usfx-red btn-sm px-4 mt-2" onclick="cargarContenido(\'prestamos/lista.php\')">Ingresar</button> \
+                    </div> \
+                </div> \
+            </div> \
+        </div>';
+}
