@@ -1,4 +1,3 @@
--- script de la base de datos del sistema de biblioteca
 CREATE DATABASE IF NOT EXISTS bd_biblioteca;
 USE bd_biblioteca;
 
@@ -19,7 +18,6 @@ CREATE TABLE usuarios (
     correo   VARCHAR(100)
 );
 
--- tabla de prestamos con llaves foraneas
 CREATE TABLE prestamos (
     id               INT PRIMARY KEY AUTO_INCREMENT,
     id_libro         INT NOT NULL,

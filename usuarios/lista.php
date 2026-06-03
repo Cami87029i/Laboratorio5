@@ -1,7 +1,6 @@
 <?php
 include('../conexion.php');
 
-// trae todos los usuarios registrados
 $sql = "select id, nombre, carnet, telefono, correo from usuarios";
 $consulta = mysqli_query($con, $sql);
 ?>

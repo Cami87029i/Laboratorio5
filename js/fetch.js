@@ -4,6 +4,7 @@ function cargarContenido(pagina) {
         .then(response => response.text())
         .then(data => contenedor.innerHTML = data);
 }
+
 function mostrarMensaje(titulo, texto) {
     document.getElementById('modalMensajeTitulo').textContent = titulo;
     document.getElementById('modalMensajeTexto').textContent = texto;
@@ -11,27 +12,95 @@ function mostrarMensaje(titulo, texto) {
     modal.show();
 }
 
+// funciones para libros
+
 function registrarLibro() {
-    var titulo = document.getElementById('titulo').value;
-    var autor  = document.getElementById('autor').value;
-    var stock  = document.getElementById('stock').value;
-    if (titulo == '' || autor == '') {
-        mostrarMensaje('Error', 'El titulo y el autor son obligatorios');
-        return;
+    var inputTitulo = document.getElementById('titulo');
+    var inputAutor = document.getElementById('autor');
+    var inputIsbn = document.getElementById('isbn');
+    var inputCategoria = document.getElementById('categoria');
+    var inputStock = document.getElementById('stock');
+
+    var mensajes = document.querySelectorAll('.error-mensaje');
+    mensajes.forEach(m => m.innerText = '');
+
+    var inputs = [
+        inputTitulo,
+        inputAutor,
+        inputIsbn,
+        inputCategoria,
+        inputStock
+    ];
+
+    inputs.forEach(i => i.classList.remove('input-error', 'input-valido'));
+
+    var esValido = true;
+
+    if (inputTitulo.value.trim().length < 3) {
+        document.getElementById('error-titulo').innerText =
+            'Error: El título debe tener al menos 3 caracteres.';
+        inputTitulo.classList.add('input-error');
+        esValido = false;
+    } else {
+        inputTitulo.classList.add('input-valido');
     }
-    if (stock < 0) {
-        mostrarMensaje('Error', 'El stock no puede ser negativo');
+
+    if (inputAutor.value.trim().length < 3) {
+        document.getElementById('error-autor').innerText =
+            'Error: El autor debe tener al menos 3 caracteres.';
+        inputAutor.classList.add('input-error');
+        esValido = false;
+    } else {
+        inputAutor.classList.add('input-valido');
+    }
+
+    if (inputIsbn.value.trim() === '') {
+        document.getElementById('error-isbn').innerText =
+            'Error: El ISBN es obligatorio.';
+        inputIsbn.classList.add('input-error');
+        esValido = false;
+    } else {
+        inputIsbn.classList.add('input-valido');
+    }
+
+    if (inputCategoria.value.trim() === '') {
+        document.getElementById('error-categoria').innerText =
+            'Error: La categoría es obligatoria.';
+        inputCategoria.classList.add('input-error');
+        esValido = false;
+    } else {
+        inputCategoria.classList.add('input-valido');
+    }
+
+    if (
+        inputStock.value.trim() === '' ||
+        parseInt(inputStock.value) < 0
+    ) {
+        document.getElementById('error-stock').innerText =
+            'Error: El stock debe ser mayor o igual a 0.';
+        inputStock.classList.add('input-error');
+        esValido = false;
+    } else {
+        inputStock.classList.add('input-valido');
+    }
+
+    if (!esValido) {
         return;
     }
 
     var datos = new FormData(document.getElementById('form-libro'));
+
     fetch('libros/create.php', {
         method: 'POST',
         body: datos
     })
     .then(response => response.json())
     .then(data => {
-        mostrarMensaje(data.status == 'ok' ? 'Exito' : 'Error', data.mensaje);
+        mostrarMensaje(
+            data.status == 'ok' ? 'Exito' : 'Error',
+            data.mensaje
+        );
+
         if (data.status == 'ok') {
             cargarContenido('libros/lista.php');
         }
@@ -46,20 +115,99 @@ function cargarEditarLibro(id) {
 }
 
 function actualizarLibro() {
-    var stock = document.getElementById('stock').value;
-    if (stock < 0) {
-        mostrarMensaje('Error', 'El stock no puede ser negativo');
+
+    var inputTitulo = document.getElementById('titulo');
+    var inputAutor = document.getElementById('autor');
+    var inputIsbn = document.getElementById('isbn');
+    var inputCategoria = document.getElementById('categoria');
+    var inputStock = document.getElementById('stock');
+
+    var mensajes = document.querySelectorAll('.error-mensaje');
+    mensajes.forEach(m => m.innerText = '');
+
+    var inputs = [
+        inputTitulo,
+        inputAutor,
+        inputIsbn,
+        inputCategoria,
+        inputStock
+    ];
+
+    inputs.forEach(i => {
+        i.classList.remove('input-error', 'input-valido');
+    });
+
+    var esValido = true;
+
+    if (inputTitulo.value.trim().length < 3) {
+        document.getElementById('error-titulo').innerText =
+            'Error: El título es obligatorio (mínimo 3 caracteres).';
+        inputTitulo.classList.add('input-error');
+        esValido = false;
+    } else {
+        inputTitulo.classList.add('input-valido');
+    }
+
+    
+
+    if (inputAutor.value.trim().length < 3) {
+        document.getElementById('error-autor').innerText =
+            'Error: El autor es obligatorio (mínimo 3 caracteres).';
+        inputAutor.classList.add('input-error');
+        esValido = false;
+    } else {
+        inputAutor.classList.add('input-valido');
+    }
+
+    
+    if (inputIsbn.value.trim() === '') {
+        document.getElementById('error-isbn').innerText =
+            'Error: El ISBN es obligatorio.';
+        inputIsbn.classList.add('input-error');
+        esValido = false;
+    } else {
+        inputIsbn.classList.add('input-valido');
+    }
+
+    if (inputCategoria.value.trim() === '') {
+        document.getElementById('error-categoria').innerText =
+            'Error: La categoría es obligatoria.';
+        inputCategoria.classList.add('input-error');
+        esValido = false;
+    } else {
+        inputCategoria.classList.add('input-valido');
+    }
+
+    if (
+        inputStock.value.trim() === '' ||
+        isNaN(inputStock.value) ||
+        parseInt(inputStock.value) < 0
+    ) {
+        document.getElementById('error-stock').innerText =
+            'Error: El stock debe ser mayor o igual a 0.';
+        inputStock.classList.add('input-error');
+        esValido = false;
+    } else {
+        inputStock.classList.add('input-valido');
+    }
+
+    if (!esValido) {
         return;
     }
 
     var datos = new FormData(document.getElementById('form-editar-libro'));
+
     fetch('libros/update.php', {
         method: 'POST',
         body: datos
     })
     .then(response => response.json())
     .then(data => {
-        mostrarMensaje(data.status == 'ok' ? 'Exito' : 'Error', data.mensaje);
+        mostrarMensaje(
+            data.status == 'ok' ? 'Exito' : 'Error',
+            data.mensaje
+        );
+
         if (data.status == 'ok') {
             cargarContenido('libros/lista.php');
         }
@@ -69,6 +217,7 @@ function actualizarLibro() {
 function eliminarLibro(id) {
     var modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('modalEliminar'));
     modal.show();
+
     document.getElementById('btn-confirmar-eliminar').onclick = function() {
         fetch('libros/delete.php?id=' + id)
             .then(response => response.json())
@@ -82,18 +231,61 @@ function eliminarLibro(id) {
     };
 }
 
-function registrarUsuario() {
-    var nombre = document.getElementById('nombre').value;
-    var carnet = document.getElementById('carnet').value;
-    var correo = document.getElementById('correo').value;
+// funciones para usuarios
 
-    if (nombre == '' || carnet == '') {
-        mostrarMensaje('Error', 'El nombre y el carnet son obligatorios');
-        return;
+function registrarUsuario() {
+    var inputNombre = document.getElementById('nombre');
+    var inputCarnet = document.getElementById('carnet');
+    var inputCorreo = document.getElementById('correo');
+    var inputTelefono = document.getElementById('telefono');
+
+    var mensajes = document.querySelectorAll('.error-mensaje');
+    mensajes.forEach(m => m.innerText = '');
+    
+    var inputs = [inputNombre, inputCarnet, inputCorreo, inputTelefono];
+    inputs.forEach(i => i.classList.remove('input-error', 'input-valido'));
+
+    var esValido = true;
+
+    
+    if (inputNombre.value.trim().length < 3) {
+        document.getElementById('error-nombre').innerText = 'Error: Este campo es obligatorio (mínimo 3 caracteres).';
+        inputNombre.classList.add('input-error');
+        esValido = false;
+    } else {
+        inputNombre.classList.add('input-valido');
     }
-    if (correo != '' && !correo.includes('@')) {
-        mostrarMensaje('Error', 'El formato del correo no es valido');
-        return;
+
+    if (inputCarnet.value.trim().length < 6) {
+        document.getElementById('error-carnet').innerText = 'Error: Carnet inválido.';
+        inputCarnet.classList.add('input-error');
+        esValido = false;
+    } else {
+        inputCarnet.classList.add('input-valido');
+    }
+
+    if (inputTelefono.value.trim().length < 8) {
+        document.getElementById('error-telefono').innerText = 'Error: Teléfono inválido.';
+        inputTelefono.classList.add('input-error');
+        esValido = false;
+    } else {
+        inputTelefono.classList.add('input-valido');
+    }
+
+    if (inputCorreo.value.trim() === '') {
+        document.getElementById('error-correo').innerText = 'Error: Este campo es obligatorio.';
+        inputCorreo.classList.add('input-error');
+        esValido = false;
+    } else if (!inputCorreo.value.includes('@')) {
+        document.getElementById('error-correo').innerText = 'Error: El formato del correo no es válido.';
+        inputCorreo.classList.add('input-error');
+        esValido = false;
+    } else {
+        inputCorreo.classList.add('input-valido');
+    }
+
+    if (!esValido) {
+        return; 
     }
 
     var datos = new FormData(document.getElementById('form-usuario'));
@@ -110,6 +302,7 @@ function registrarUsuario() {
     });
 }
 
+
 function cargarEditarUsuario(id) {
     var contenedor = document.getElementById('contenido');
     fetch('usuarios/form-editar.php?id=' + id)
@@ -117,11 +310,60 @@ function cargarEditarUsuario(id) {
         .then(data => contenedor.innerHTML = data);
 }
 
+
 function actualizarUsuario() {
-    var correo = document.getElementById('correo').value;
-    if (correo != '' && !correo.includes('@')) {
-        mostrarMensaje('Error', 'El formato del correo no es valido');
-        return;
+    var inputNombre = document.getElementById('nombre');
+    var inputCarnet = document.getElementById('carnet');
+    var inputCorreo = document.getElementById('correo');
+    var inputTelefono = document.getElementById('telefono');
+
+    var mensajes = document.querySelectorAll('.error-mensaje');
+    mensajes.forEach(m => m.innerText = '');
+    
+    var inputs = [inputNombre, inputCarnet, inputCorreo, inputTelefono];
+    inputs.forEach(i => i.classList.remove('input-error', 'input-valido'));
+
+    var esValido = true;
+
+
+    if (inputNombre.value.trim().length < 3) {
+        document.getElementById('error-nombre').innerText = 'Error: El nombre debe tener al menos 3 caracteres.';
+        inputNombre.classList.add('input-error');
+        esValido = false;
+    } else {
+        inputNombre.classList.add('input-valido');
+    }
+
+    if (inputCarnet.value.trim().length < 6) {
+        document.getElementById('error-carnet').innerText = 'Error: Carnet inválido (mínimo 6 dígitos).';
+        inputCarnet.classList.add('input-error');
+        esValido = false;
+    } else {
+        inputCarnet.classList.add('input-valido');
+    }
+
+    if (inputTelefono.value.trim().length < 8) {
+        document.getElementById('error-telefono').innerText = 'Error: Teléfono inválido (mínimo 8 dígitos).';
+        inputTelefono.classList.add('input-error');
+        esValido = false;
+    } else {
+        inputTelefono.classList.add('input-valido');
+    }
+
+    if (inputCorreo.value.trim() === '') {
+        document.getElementById('error-correo').innerText = 'Error: Este campo es obligatorio.';
+        inputCorreo.classList.add('input-error');
+        esValido = false;
+    } else if (!inputCorreo.value.includes('@')) {
+        document.getElementById('error-correo').innerText = 'Error: El formato del correo no es válido.';
+        inputCorreo.classList.add('input-error');
+        esValido = false;
+    } else {
+        inputCorreo.classList.add('input-valido');
+    }
+
+    if (!esValido) {
+        return; 
     }
 
     var datos = new FormData(document.getElementById('form-editar-usuario'));
@@ -154,24 +396,96 @@ function eliminarUsuario(id) {
             });
     };
 }
-function registrarPrestamo() {
-    var idLibro    = document.getElementById('id_libro').value;
-    var idUsuario  = document.getElementById('id_usuario').value;
-    var fechaPrest = document.getElementById('fecha_prestamo').value;
 
-    if (idLibro == '' || idUsuario == '' || fechaPrest == '') {
-        mostrarMensaje('Error', 'Libro, usuario y fecha de prestamo son obligatorios');
+// funciones para prestamos 
+
+function registrarPrestamo() {
+
+    var inputLibro = document.getElementById('id_libro');
+    var inputUsuario = document.getElementById('id_usuario');
+    var inputFechaPrestamo = document.getElementById('fecha_prestamo');
+    var inputFechaDevolucion = document.getElementById('fecha_devolucion');
+
+    var mensajes = document.querySelectorAll('.error-mensaje');
+    mensajes.forEach(m => m.innerText = '');
+    var inputs = [
+        inputLibro,
+        inputUsuario,
+        inputFechaPrestamo,
+        inputFechaDevolucion
+    ];
+
+    inputs.forEach(i => {
+        i.classList.remove('input-error', 'input-valido');
+    });
+
+    var esValido = true;
+
+    
+    if (inputLibro.value === '') {
+        document.getElementById('error-libro').innerText =
+            'Error: Debe seleccionar un libro.';
+        inputLibro.classList.add('input-error');
+        esValido = false;
+    } else {
+        inputLibro.classList.add('input-valido');
+    }
+
+    if (inputUsuario.value === '') {
+        document.getElementById('error-usuario').innerText =
+            'Error: Debe seleccionar un usuario.';
+        inputUsuario.classList.add('input-error');
+        esValido = false;
+    } else {
+        inputUsuario.classList.add('input-valido');
+    }
+
+    if (inputFechaPrestamo.value === '') {
+        document.getElementById('error-fecha-prestamo').innerText =
+            'Error: Debe ingresar la fecha de préstamo.';
+        inputFechaPrestamo.classList.add('input-error');
+        esValido = false;
+    } else {
+        inputFechaPrestamo.classList.add('input-valido');
+    }
+
+    if (inputFechaDevolucion.value === '') {
+        document.getElementById('error-fecha-devolucion').innerText =
+            'Error: Debe ingresar la fecha de devolución.';
+        inputFechaDevolucion.classList.add('input-error');
+        esValido = false;
+    }
+    else if (
+        inputFechaPrestamo.value !== '' &&
+        inputFechaDevolucion.value < inputFechaPrestamo.value
+    ) {
+        document.getElementById('error-fecha-devolucion').innerText =
+            'Error: La fecha de devolución no puede ser anterior a la fecha de préstamo.';
+        inputFechaDevolucion.classList.add('input-error');
+        esValido = false;
+    }
+    else {
+        inputFechaDevolucion.classList.add('input-valido');
+    }
+
+    if (!esValido) {
         return;
     }
 
     var datos = new FormData(document.getElementById('form-prestamo'));
+
     fetch('prestamos/create.php', {
         method: 'POST',
         body: datos
     })
     .then(response => response.json())
     .then(data => {
-        mostrarMensaje(data.status == 'ok' ? 'Exito' : 'Error', data.mensaje);
+
+        mostrarMensaje(
+            data.status == 'ok' ? 'Exito' : 'Error',
+            data.mensaje
+        );
+
         if (data.status == 'ok') {
             cargarContenido('prestamos/lista.php');
         }
@@ -212,6 +526,7 @@ function eliminarPrestamo(id) {
             });
     };
 }
+
 function filtrarPrestamos() {
     var libro   = document.getElementById('filtro-libro').value;
     var usuario = document.getElementById('filtro-usuario').value;

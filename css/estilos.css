@@ -3,29 +3,78 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-/* encabezado de cada seccion */
 .seccion-titulo {
     border-bottom: 2px solid #343a40;
     padding-bottom: 8px;
     margin-bottom: 20px;
 }
 
-/* cabecera de tablas */
 table thead th {
     background-color: #343a40;
     color: white;
 }
 
-/* resaltar filas con prestamos vencidos */
 .fila-vencida {
-    background-color: #f8d7da !important;
-    color: #842029;
+    background-color: #f8d7da;
+    color: #be1a28;
 }
 
-/* formularios centrados con un poco de sombra */
 .card-formulario {
     background-color: white;
     border-radius: 6px;
     padding: 25px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+.error-mensaje {
+    color: #cc0000;
+    font-size: 12px;
+    display: block;
+    margin-top: 4px;
+    min-height: 15px; 
+}
+
+.input-error {
+    border: 1px solid #ff0000;
+    outline: none;
+}
+
+.input-valido {
+    border: 1px solid #0000ff;
+}
+
+.navB{
+    background-color: rgb(180, 0, 0);
+    color: white;
+}
+
+
+.navB {
+    background-color: #0b1528;
+}
+
+.hero-usfx {
+    background-color: #111e38;
+    border-bottom: 4px solid #a81c24;
+}
+
+.text-usfx-blue {
+    color: #0b1528;
+}
+
+.btn-usfx-red {
+    background-color: #a81c24;
+    color: white;
+}
+
+.btn-usfx-red:hover {
+    background-color: #85141a;
+    color: white;
+}
+
+
+.Logo{
+    color: white;
+    font-weight: bold;
 }
