@@ -10,4 +10,6 @@ Universitario (a):
 <p>6. Pedraza Valverde Jose Maria<p>
 <p>7. Salgueiro Gardeazabal Josué David<p>
 <p>8. Uzeda Rivera Alan Jesus<p>
+<p>8. Uzeda Rivera Alan Jesus<p>
+<p>9. Jhonnathan Peñaranda Mamani<p>
 
