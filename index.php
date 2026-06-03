@@ -23,7 +23,7 @@
     <div class="hero-usfx text-white py-5 text-center shadow-sm">
         <div class="container">
             <h1 class="fw-bold display-5">Sistema de Gestión Bibliotecaria</h1>
-            <p class="lead opacity-75">Facultad de Tecnología / Ciencias de la Computación</p>
+            <p class="lead opacity-75">Ciencias de la Computación</p>
         </div>
     </div>
 
